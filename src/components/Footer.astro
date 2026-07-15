@@ -1,0 +1,41 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<p>© {currentYear} Linahhsheng</p>
+		<p>我在這邊記錄我ㄉ笙活</p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.footer-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		width: min(100% - 3rem, 720px);
+		padding: 1.5rem 0 2rem;
+		margin: 0 auto;
+		color: #666666;
+		font-size: 0.8125rem;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	@media (max-width: 480px) {
+		.footer-inner {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.25rem;
+		width: min(100% - 2rem, 720px);
+		}
+	}
+</style>

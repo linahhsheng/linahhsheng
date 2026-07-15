@@ -1,0 +1,237 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts');
+
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'posts'> };
+const { Content } = await render(post);
+const formattedDate = new Intl.DateTimeFormat('zh-TW', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}).format(post.data.pubDate);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+	<article class="post">
+		<a class="back-link" href="/">← 回到首頁</a>
+
+		<header class="post-header">
+			<p class="date">{formattedDate}</p>
+			<h1>{post.data.title}</h1>
+			<p class="description">{post.data.description}</p>
+			{post.data.tags.length > 0 && (
+				<ul class="tags" aria-label="文章標籤">
+					{post.data.tags.map((tag) => <li>{tag}</li>)}
+				</ul>
+			)}
+		</header>
+
+		<div class="content">
+			<Content />
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.post {
+		width: min(100% - 3rem, 720px);
+		padding: 3rem 0 6rem;
+		margin: 0 auto;
+	}
+
+	.back-link {
+		color: #666666;
+		font-size: 0.875rem;
+	}
+
+	.back-link:hover,
+	.back-link:focus-visible {
+		color: #ff7575;
+	}
+
+	.back-link:focus-visible {
+		outline: 2px solid #ff7575;
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.post-header {
+		padding: 3.5rem 0;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.date {
+		margin: 0 0 0.75rem;
+		color: #666666;
+		font-size: 0.875rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2rem, 6vw, 3.25rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1.2;
+	}
+
+	.description {
+		margin: 1rem 0 0;
+		color: #666666;
+		font-size: 1.0625rem;
+		line-height: 1.8;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0;
+		margin: 1.25rem 0 0;
+		list-style: none;
+	}
+
+	.tags li {
+		padding: 0.125rem 0.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 999px;
+		color: #666666;
+		font-size: 0.75rem;
+		transition: border-color 150ms ease, color 150ms ease;
+	}
+
+	.tags li:hover {
+		border-color: #ff7575;
+		color: #ff7575;
+	}
+
+	.content {
+		padding-top: 2.5rem;
+		font-size: 1.0625rem;
+		line-height: 1.9;
+	}
+
+	.content :global(h2),
+	.content :global(h3) {
+		margin: 2.75rem 0 1rem;
+		font-weight: 600;
+		letter-spacing: -0.025em;
+		line-height: 1.35;
+	}
+
+	.content :global(h2) {
+		font-size: 1.5rem;
+	}
+
+	.content :global(h3) {
+		font-size: 1.25rem;
+	}
+
+	.content :global(p),
+	.content :global(ul),
+	.content :global(ol),
+	.content :global(blockquote) {
+		margin: 0 0 1.5rem;
+	}
+
+	.content :global(ul),
+	.content :global(ol) {
+		padding-left: 1.5rem;
+	}
+
+	.content :global(a) {
+		color: #ff7575;
+		text-decoration-line: underline;
+		text-decoration-color: #ff7575;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus-visible) {
+		text-decoration-color: #ff7575;
+	}
+
+	.content :global(blockquote) {
+		padding-left: 1rem;
+		border-left: 3px solid #ff7575;
+		color: #666666;
+	}
+
+	.content :global(hr) {
+		border: 0;
+		border-top: 1px solid #e5e7eb;
+		margin: 2.5rem 0;
+	}
+
+	.content :global(img),
+	.content :global(video),
+	.content :global(iframe) {
+		width: 100%;
+		margin: 2rem 0;
+		border-radius: 0.5rem;
+	}
+
+	.content :global(iframe) {
+		aspect-ratio: 16 / 9;
+		height: auto;
+		border: 0;
+	}
+
+	.content :global(pre) {
+		overflow-x: auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background: #f3f4f6;
+		font-size: 0.875rem;
+		line-height: 1.7;
+	}
+
+	.content :global(code) {
+		font-size: 0.875em;
+	}
+
+	.content :global(:not(pre) > code) {
+		padding: 0.15em 0.35em;
+		border-radius: 0.25rem;
+		background: #f3f4f6;
+	}
+
+	.content :global(table) {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+		border-collapse: collapse;
+		margin: 2rem 0;
+	}
+
+	.content :global(th),
+	.content :global(td) {
+		padding: 0.75rem;
+		border: 1px solid #e5e7eb;
+		text-align: left;
+	}
+
+	@media (max-width: 480px) {
+		.post {
+			width: min(100% - 2rem, 720px);
+			padding: 2rem 0 4rem;
+		}
+
+		.post-header {
+			padding: 2.5rem 0;
+		}
+
+		.content {
+			font-size: 1rem;
+		}
+	}
+</style>

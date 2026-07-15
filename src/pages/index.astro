@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const latestPosts = (await getCollection('posts'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+---
+
+<Layout>
+	<div class="page-container">
+		<section class="hero" aria-labelledby="page-title">
+			<h1 id="page-title">Linahhsheng</h1>
+			<p class="subtitle">記錄我ㄉ笙活。</p>
+			<p class="topics">Life · Badminton · Music · Gaming</p>
+		</section>
+
+		<section class="latest-posts" aria-labelledby="latest-posts-title">
+			<div class="section-heading">
+				<h2 id="latest-posts-title">Latest Posts</h2>
+				<span>{latestPosts.length} 篇</span>
+			</div>
+
+			<div>
+				{latestPosts.map((post) => <PostCard post={post} />)}
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<style>
+	.page-container {
+		width: min(100% - 3rem, 720px);
+		padding: 5.5rem 0 6rem;
+		margin: 0 auto;
+	}
+
+	.hero {
+		padding-bottom: 5.5rem;
+	}
+
+	h1,
+	h2 {
+		letter-spacing: -0.04em;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2.5rem, 8vw, 4rem);
+		font-weight: 700;
+		line-height: 1.1;
+	}
+
+	.subtitle {
+		margin: 1rem 0 0;
+		color: #666666;
+		font-size: 1.125rem;
+	}
+
+	.topics {
+		margin: 1.25rem 0 0;
+		color: #666666;
+		font-size: 0.8125rem;
+		letter-spacing: 0.01em;
+	}
+
+	.section-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.25rem;
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 600;
+	}
+
+	.section-heading span {
+		color: #666666;
+		font-size: 0.8125rem;
+	}
+
+	@media (max-width: 480px) {
+		.page-container {
+			width: min(100% - 2rem, 720px);
+			padding: 4rem 0;
+		}
+
+		.hero {
+			padding-bottom: 4rem;
+		}
+	}
+</style>

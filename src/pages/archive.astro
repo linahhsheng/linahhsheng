@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const posts = (await getCollection('posts')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const dateFormatter = new Intl.DateTimeFormat('zh-TW', {
+	year: 'numeric',
+	month: 'short',
+	day: 'numeric',
+});
+---
+
+<Layout title="Archive" description="Linahhsheng 的文章封存。">
+	<section class="archive" aria-labelledby="page-title">
+		<header>
+			<h1 id="page-title">Archive</h1>
+			<p>所有文章，依時間排列。</p>
+		</header>
+
+		<ul class="post-list">
+			{
+				posts.map((post) => (
+					<li>
+						<a href={`/posts/${post.id}/`}>
+							<span class="title">{post.data.title}</span>
+							<time datetime={post.data.pubDate.toISOString()}>
+								{dateFormatter.format(post.data.pubDate)}
+							</time>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</Layout>
+
+<style>
+	.archive {
+		width: min(100% - 3rem, 720px);
+		padding: 5.5rem 0 6rem;
+		margin: 0 auto;
+	}
+
+	header {
+		padding-bottom: 3rem;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2.25rem, 7vw, 3.5rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1.15;
+	}
+
+	header p {
+		margin: 1rem 0 0;
+		color: #666666;
+	}
+
+	.post-list {
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid #e5e7eb;
+		list-style: none;
+	}
+
+	.post-list li {
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.post-list a {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 1.125rem 0;
+	}
+
+	.title {
+		font-weight: 500;
+		letter-spacing: -0.01em;
+	}
+
+	time {
+		flex: 0 0 auto;
+		color: #666666;
+		font-size: 0.8125rem;
+	}
+
+	.post-list a:hover .title,
+	.post-list a:focus-visible .title {
+		color: #ff7575;
+	}
+
+	.post-list a:focus-visible {
+		outline: 2px solid #ff7575;
+		outline-offset: -2px;
+		border-radius: 2px;
+	}
+
+	@media (max-width: 480px) {
+		.archive {
+			width: min(100% - 2rem, 720px);
+			padding: 4rem 0;
+		}
+
+		.post-list a {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	}
+</style>

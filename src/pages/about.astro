@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About" description="關於 Linahhsheng。">
+	<section class="about" aria-labelledby="page-title">
+		<header>
+			<p class="eyebrow">About</p>
+			<h1 id="page-title">嗨，我是 Linahhsheng。</h1>
+		</header>
+
+		<div class="content">
+			<p>這裡是一個留給自己的角落，我在這邊記錄我ㄉ笙活。</p>
+			<p>寫下日常、羽球、音樂、遊戲、一些想法，還有慢慢長大的過程。</p>
+			<p>希望藉由記錄生活，能更了解自己，還有這個世界。</p>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.about {
+		width: min(100% - 3rem, 640px);
+		padding: 5.5rem 0 6rem;
+		margin: 0 auto;
+	}
+
+	.eyebrow {
+		margin: 0 0 0.875rem;
+		color: #ff7575;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2.25rem, 7vw, 3.5rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 1.2;
+	}
+
+	.content {
+		margin-top: 3.5rem;
+		color: #444444;
+		font-size: 1.0625rem;
+		line-height: 2;
+	}
+
+	p {
+		margin: 0 0 1.5rem;
+	}
+
+	@media (max-width: 480px) {
+		.about {
+			width: min(100% - 2rem, 640px);
+			padding: 4rem 0;
+		}
+	}
+</style>

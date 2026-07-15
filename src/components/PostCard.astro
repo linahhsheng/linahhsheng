@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('zh-TW', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}).format(post.data.pubDate);
+---
+
+<article class="post-card">
+	<p class="date">{formattedDate}</p>
+	<h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
+	<p class="description">{post.data.description}</p>
+	{post.data.tags.length > 0 && (
+		<ul class="tags" aria-label="文章標籤">
+			{post.data.tags.map((tag) => <li>{tag}</li>)}
+		</ul>
+	)}
+</article>
+
+<style>
+	.post-card {
+		padding: 1.5rem 0;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.date {
+		margin: 0 0 0.5rem;
+		color: #666666;
+		font-size: 0.8125rem;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1.125rem;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1.5;
+	}
+
+	h3 a:hover,
+	h3 a:focus-visible {
+		color: #ff7575;
+	}
+
+	h3 a:focus-visible {
+		outline: 2px solid #ff7575;
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.description {
+		margin: 0.5rem 0 0;
+		color: #666666;
+		font-size: 0.9375rem;
+		line-height: 1.75;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		padding: 0;
+		margin: 1rem 0 0;
+		list-style: none;
+	}
+
+	.tags li {
+		padding: 0.125rem 0.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 999px;
+		color: #666666;
+		font-size: 0.75rem;
+		line-height: 1.5;
+		transition: border-color 150ms ease, color 150ms ease;
+	}
+
+	.tags li:hover {
+		border-color: #ff7575;
+		color: #ff7575;
+	}
+</style>
