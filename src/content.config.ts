@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 // Posts are local Markdown files: metadata stays validated while writing stays simple.
 const posts = defineCollection({
-	loader: glob({ base: './src/content/posts', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/posts', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

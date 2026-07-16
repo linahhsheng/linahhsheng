@@ -5,7 +5,7 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
 	<div class="footer-inner">
 		<p>© {currentYear} Linahhsheng</p>
-		<p>我在這邊記錄我ㄉ笙活</p>
+		<a class="rss-link" href="/rss.xml">RSS</a>
 	</div>
 </footer>
 
@@ -28,6 +28,17 @@ const currentYear = new Date().getFullYear();
 
 	p {
 		margin: 0;
+	}
+
+	.rss-link:hover,
+	.rss-link:focus-visible {
+		color: #ff7575;
+	}
+
+	.rss-link:focus-visible {
+		outline: 2px solid #ff7575;
+		outline-offset: 3px;
+		border-radius: 2px;
 	}
 
 	@media (max-width: 480px) {

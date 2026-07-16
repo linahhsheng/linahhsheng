@@ -1,0 +1,34 @@
+---
+interface Props {
+	url: string;
+	title?: string;
+}
+
+const { url, title = 'YouTube 影片' } = Astro.props;
+const sourceUrl = new URL(url);
+const host = sourceUrl.hostname.replace('www.', '');
+const videoId =
+	host === 'youtu.be'
+		? sourceUrl.pathname.slice(1)
+		: sourceUrl.searchParams.get('v') ?? sourceUrl.pathname.split('/').at(-1);
+
+if (!videoId) {
+	throw new Error(`無法從網址建立 YouTube 嵌入影片：${url}`);
+}
+
+const startValue = sourceUrl.searchParams.get('t') ?? sourceUrl.searchParams.get('start');
+const startSeconds = startValue ? Number.parseInt(startValue, 10) : 0;
+const embedUrl = new URL(`https://www.youtube-nocookie.com/embed/${videoId}`);
+
+if (Number.isFinite(startSeconds) && startSeconds > 0) {
+	embedUrl.searchParams.set('start', String(startSeconds));
+}
+---
+
+<iframe
+	src={embedUrl.toString()}
+	title={title}
+	loading="lazy"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+></iframe>
