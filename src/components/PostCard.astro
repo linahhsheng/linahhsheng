@@ -13,7 +13,7 @@ const formattedDate = new Intl.DateTimeFormat('zh-TW', {
 }).format(post.data.pubDate);
 ---
 
-<article class="post-card">
+<article class="post-card" data-post-card data-tags={post.data.tags.join('|')}>
 	<p class="date">{formattedDate}</p>
 	<h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
 	<p class="description">{post.data.description}</p>
