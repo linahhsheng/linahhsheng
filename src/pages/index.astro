@@ -13,7 +13,13 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort((a
 ---
 
 <Layout>
-	<div class="page-container">
+	<div class="home-stage">
+		<aside class="profile-card" aria-label="個人簡介">
+			<img src="/media/profile.jpg" alt="我和 Binky" width="140" height="140" />
+			<p>這是我和 Binky！</p>
+		</aside>
+
+		<div class="page-container">
 		<section class="hero" aria-labelledby="page-title">
 			<h1 id="page-title">Linahhsheng</h1>
 			<p class="subtitle">記錄我ㄉ笙活。</p>
@@ -42,6 +48,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort((a
 			</div>
 			<p class="empty-state" data-empty-state hidden>沒有符合的文章。</p>
 		</section>
+		</div>
 	</div>
 </Layout>
 
@@ -91,6 +98,35 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort((a
 </script>
 
 <style>
+	.home-stage {
+		position: relative;
+	}
+
+	.profile-card {
+		position: absolute;
+		top: 5.5rem;
+		left: calc(50% - 560px);
+		width: 140px;
+		margin: 0;
+		text-align: center;
+	}
+
+	.profile-card img {
+		display: block;
+		width: 140px;
+		height: 140px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.profile-card p {
+		margin: 0.75rem 0 0;
+		color: #666666;
+		font-size: 13px;
+		line-height: 1.5;
+		white-space: nowrap;
+	}
+
 	.page-container {
 		width: min(100% - 3rem, 720px);
 		padding: 5.5rem 0 6rem;
@@ -192,6 +228,11 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort((a
 	}
 
 	@media (max-width: 480px) {
+		.profile-card {
+			position: static;
+			margin: 2rem auto 0;
+		}
+
 		.page-container {
 			width: min(100% - 2rem, 720px);
 			padding: 4rem 0;
