@@ -26,6 +26,12 @@ const readableText = post.body
 const chineseCharacters = readableText.match(/[\u3400-\u9fff]/g)?.length ?? 0;
 const englishWords = readableText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g)?.length ?? 0;
 const readingMinutes = Math.max(1, Math.ceil((chineseCharacters + englishWords) / 225));
+const sortedPosts = (await getCollection('posts')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const currentPostIndex = sortedPosts.findIndex((entry) => entry.id === post.id);
+const newerPost = sortedPosts[currentPostIndex - 1];
+const olderPost = sortedPosts[currentPostIndex + 1];
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -46,6 +52,25 @@ const readingMinutes = Math.max(1, Math.ceil((chineseCharacters + englishWords) 
 		<div class="content">
 			<Content components={{ YouTube }} />
 		</div>
+
+		{
+			(newerPost || olderPost) && (
+				<nav class:list={['post-navigation', { 'only-older': !newerPost && olderPost }]} aria-label="文章導覽">
+					{newerPost && (
+						<a href={`/posts/${newerPost.id}/`}>
+							<span>較新一篇</span>
+							<strong>{newerPost.data.title}</strong>
+						</a>
+					)}
+					{olderPost && (
+						<a href={`/posts/${olderPost.id}/`}>
+							<span>較舊一篇</span>
+							<strong>{olderPost.data.title}</strong>
+						</a>
+					)}
+				</nav>
+			)
+		}
 	</article>
 </Layout>
 
@@ -233,6 +258,48 @@ const readingMinutes = Math.max(1, Math.ceil((chineseCharacters + englishWords) 
 		text-align: left;
 	}
 
+	.post-navigation {
+		display: flex;
+		justify-content: space-between;
+		gap: 2rem;
+		padding-top: 2rem;
+		margin-top: 3.5rem;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.post-navigation.only-older {
+		justify-content: flex-end;
+	}
+
+	.post-navigation a {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		max-width: 48%;
+	}
+
+	.post-navigation span {
+		color: #666666;
+		font-size: 0.8125rem;
+	}
+
+	.post-navigation strong {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		line-height: 1.5;
+	}
+
+	.post-navigation a:hover,
+	.post-navigation a:focus-visible {
+		color: #ff7575;
+	}
+
+	.post-navigation a:focus-visible {
+		outline: 2px solid #ff7575;
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
 	@media (max-width: 480px) {
 		.post {
 			width: min(100% - 2rem, 720px);
@@ -245,6 +312,10 @@ const readingMinutes = Math.max(1, Math.ceil((chineseCharacters + englishWords) 
 
 		.content {
 			font-size: 1rem;
+		}
+
+		.post-navigation {
+			gap: 1rem;
 		}
 	}
 </style>
