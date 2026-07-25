@@ -6,7 +6,7 @@ import PostCard from '../components/PostCard.astro';
 const allPosts = (await getCollection('posts')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-const latestPosts = allPosts.slice(0, 5);
+const latestPosts = allPosts;
 const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort((a, b) =>
 	a.localeCompare(b, 'zh-Hant'),
 );
