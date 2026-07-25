@@ -1,6 +1,6 @@
 ---
 title: 印度料理
-description: 很好吃喔
+description: 在大安區的一間超讚印度料理
 pubDate: 2026-07-19
 tags:
   - 生活
