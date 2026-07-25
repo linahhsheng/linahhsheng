@@ -9,11 +9,41 @@ import Layout from '../layouts/Layout.astro';
 			<h1 id="page-title">嗨，我是 Linahhsheng。</h1>
 		</header>
 
+		<figure class="about-figure">
+	<img
+		class="about-photo"
+		src="/media/profile.jpg"
+		alt="我和 Binky 的合照"
+	/>
+	<figcaption class="about-caption">
+		這是我和我的兔子 Binky！
+	</figcaption>
+</figure>
 		<div class="content">
-			<p>你也可以叫我林阿笙或阿笙。</p>
-			<p>這裡是一個留給自己的角落，我在這邊記錄我ㄉ笙活。</p>
-			<p>寫下日常、羽球、音樂、遊戲、一些想法，還有慢慢長大的過程。</p>
-			<p>希望藉由記錄生活，能更了解自己，還有這個世界。</p>
+			<p>你也可以叫我林阿笙或阿笙！</p>
+			<p>這裡是我在網路上的小窩，用來記錄我ㄉ笙活。</p>
+			<p>在這裡你會看到日常、羽球、音樂、遊戲，或是我的一些想法。</p>
+			<p>希望藉由記錄生活，能更了解自己，也更了解這個世界。</p>
+
+			<p>
+				如果你剛好讀到了我的文章，想分享你的故事、交流想法，或只是想打聲招呼，都很歡迎透過
+				<a
+					class="contact-link"
+					href="mailto:linahhsheng@gmail.com"
+				>
+					Email
+				</a>
+				或
+				<a
+					class="contact-link"
+					href="https://www.instagram.com/linlyusheng/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Instagram
+				</a>
+				聯絡我！
+			</p>
 		</div>
 	</section>
 </Layout>
@@ -59,4 +89,37 @@ import Layout from '../layouts/Layout.astro';
 			padding: 4rem 0;
 		}
 	}
+
+	.contact-link {
+	color: #FF7575;
+	text-decoration: none;
+	transition: opacity 0.2s ease;
+}
+
+.contact-link:hover {
+	text-decoration: underline;
+	opacity: 0.8;
+}
+
+.about-figure {
+	margin: 2rem auto 2.5rem;
+	text-align: center;
+}
+
+.about-photo {
+	display: block;
+	width: min(100%, 260px);
+	height: auto;
+	margin: 0 auto;
+	border-radius: 16px;
+	object-fit: cover;
+}
+
+.about-caption {
+	margin-top: 0.75rem;
+	font-size: 0.875rem;
+	color: #666666;
+	line-height: 1.5;
+}
+
 </style>
