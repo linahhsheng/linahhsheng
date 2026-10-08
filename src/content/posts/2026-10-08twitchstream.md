@@ -6,7 +6,7 @@ tags:
   - 生活
 ---
 
-最近開始認真經營 [Twitch](https://www.twitch.tv/wantushuli123) 實況，還有經營 Threads，研究怎麼發文會比較多觸及，要怎麼把觸及導流到我的 [Twitch](https://www.twitch.tv/wantushuli123)。
+最近開始認真經營 [Twitch](https://www.twitch.tv/wantushuli123) 實況，還有經營 [Threads](https://www.threads.com/@wantushuli?hl=zh-tw)，研究怎麼發文會比較多觸及，要怎麼把觸及導流到我的 [Twitch](https://www.twitch.tv/wantushuli123)。
 
 發現其實經營 Threads 也不是這麼容易耶！要絞盡腦汁想什麼樣的「文案」能夠引起人的共鳴，進而想要互動，這些貼文還不能偏離自己的主題還有內容太遠。
 
